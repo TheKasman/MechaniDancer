@@ -5,7 +5,7 @@ public partial class MainCharacter : CharacterBody2D
 {
     [Export]
     public int TileSize = 128;
-    public double BeatInterval = 0.5; // seconds per beat
+    public double BeatInterval = 1; // seconds per beat
     public double Margin = 0.1; // strict window
 
     private double _startTime;
@@ -34,7 +34,7 @@ public partial class MainCharacter : CharacterBody2D
         {
             double keypressTime = (Time.GetTicksMsec() / 1000.0) - _startTime;
 
-            if (IsOnBeat(keypressTime))
+            if (TrueSoul.Instance.IsOnBeat(keypressTime))
             {
                 Position += direction * TileSize;
             }
@@ -43,18 +43,5 @@ public partial class MainCharacter : CharacterBody2D
                 GD.Print("YOU MISSED");
             }
         }
-    }
-
-    private bool IsOnBeat(double keypressTime)
-    {
-        int nearestIndex = (int)Math.Floor(keypressTime / BeatInterval);
-
-        double currentBeat = nearestIndex * BeatInterval;
-        double nextBeat = (nearestIndex + 1) * BeatInterval;
-
-        bool early = Math.Abs(keypressTime - currentBeat) <= Margin;
-        bool late = Math.Abs(keypressTime - nextBeat) <= Margin;
-
-        return early || late;
     }
 }
