@@ -5,6 +5,17 @@ public partial class MainCharacter : CharacterBody2D
 {
     [Export]
     public int TileSize = 128;
+    public double BeatInterval = 1; // seconds per beat
+    public double Margin = 0.1; // strict window
+
+    private double _startTime;
+
+    public override void _Ready()
+    {
+        // Mark "beat zero" as the moment the level starts
+        // Later: replace with Music playback position once the musci starts
+        _startTime = Time.GetTicksMsec() / 1000.0;
+    }
 
     public override void _Process(double delta)
     {
@@ -21,7 +32,16 @@ public partial class MainCharacter : CharacterBody2D
 
         if (direction != Vector2.Zero)
         {
-            Position += direction * TileSize;
+            double keypressTime = (Time.GetTicksMsec() / 1000.0) - _startTime;
+
+            if (TrueSoul.Instance.IsOnBeat(keypressTime))
+            {
+                Position += direction * TileSize;
+            }
+            else
+            {
+                GD.Print("YOU MISSED");
+            }
         }
     }
 }
