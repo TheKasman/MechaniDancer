@@ -1,47 +1,42 @@
 using System;
 using Godot;
 
-public partial class TrueSoul : Node
+public partial class TrueSoul : AudioStreamPlayer
 {
-    public static TrueSoul Instance { get; private set; }
-
     [Export]
-    public double BPM = 120.0;
+    public double BPM = 100.0;
     public double Margin = 0.1;
-    public double StartOffset = 0.0; // To line up with the waveform later
-
+    public double StartOffset = 0.0; // To line up with the waveform MusicPlayer
     public double BeatInterval => 60.0 / BPM;
 
     [Signal]
     public delegate void BeatHitEventHandler(int beatIndex);
 
-    private double _startTime;
-    private Timer _beatTimer;
-    private int _beatCount = 0;
+    public static TrueSoul Instance { get; private set; }
+    private int _lastBeatIndex = -1;
 
     public override void _Ready()
     {
         Instance = this;
-
-        _startTime = Time.GetTicksMsec() / 1000.0;
-
-        _beatTimer = new Timer();
-        AddChild(_beatTimer);
-        _beatTimer.WaitTime = BeatInterval;
-        _beatTimer.OneShot = false; // REPEAT FOREVAAAA
-        _beatTimer.Timeout += OnBeatTimerTimeout;
-        _beatTimer.Start();
+        Play();
     }
 
-    private void OnBeatTimerTimeout()
+    public override void _Process(double delta)
     {
-        _beatCount++;
-        EmitSignal(SignalName.BeatHit, _beatCount);
+        double elapsed = GetElapsedTime();
+        int currentBeatIndex = (int)Math.Floor(elapsed / BeatInterval);
+
+        if (currentBeatIndex > _lastBeatIndex)
+        {
+            _lastBeatIndex = currentBeatIndex;
+            GD.Print("Beat fired: " + currentBeatIndex);
+            EmitSignal(SignalName.BeatHit, currentBeatIndex);
+        }
     }
 
     public double GetElapsedTime()
     {
-        return (Time.GetTicksMsec() / 1000.0) - _startTime - StartOffset;
+        return GetPlaybackPosition() - StartOffset;
     }
 
     public bool IsOnBeat(double keypressTime)

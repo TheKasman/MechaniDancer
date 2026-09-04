@@ -22,6 +22,7 @@ public partial class BeatIndicator : ColorRect
     private void OnBeatHit(int beatIndex)
     {
         // As soon as the beat fires... this should snap up to size
+        GD.Print("BeatIndicator received: " + beatIndex);
         Scale = _baseScale * PulseScale;
     }
 

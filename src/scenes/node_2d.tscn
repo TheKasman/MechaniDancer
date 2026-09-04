@@ -3,8 +3,14 @@
 [ext_resource type="Script" uid="uid://c24cnuhhwfblk" path="res://src/scripts/MainCharacter.cs" id="1_pgq6d"]
 [ext_resource type="Texture2D" uid="uid://cafd6678cici5" path="res://src/assets/sprites/icon.svg" id="2_jxl4m"]
 [ext_resource type="Script" uid="uid://dp6aag0fql3h5" path="res://src/scripts/BeatIndicator.cs" id="3_jxl4m"]
+[ext_resource type="AudioStream" uid="uid://bqfgkhumq48fo" path="res://src/assets/audio/MachiniDancer.wav" id="4_cikdb"]
+[ext_resource type="Script" uid="uid://d0kxj4e5g12p" path="res://src/scripts/TrueSoul.cs" id="5_0igyg"]
 
 [node name="Node2D" type="Node2D" unique_id=1074453659]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1398119759]
+stream = ExtResource("4_cikdb")
+script = ExtResource("5_0igyg")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=102084803]
 script = ExtResource("1_pgq6d")
