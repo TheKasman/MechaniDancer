@@ -5,8 +5,19 @@
 [ext_resource type="Script" uid="uid://dp6aag0fql3h5" path="res://src/scripts/BeatIndicator.cs" id="3_jxl4m"]
 [ext_resource type="AudioStream" uid="uid://bqfgkhumq48fo" path="res://src/assets/audio/MachiniDancer.wav" id="4_cikdb"]
 [ext_resource type="Script" uid="uid://d0kxj4e5g12p" path="res://src/scripts/TrueSoul.cs" id="5_0igyg"]
+[ext_resource type="Script" uid="uid://byklivhtp0wae" path="res://src/scripts/BlueSlime.cs" id="6_n87l3"]
+[ext_resource type="Script" uid="uid://dxeowxkdfvfsw" path="res://src/scripts/YellowSlime.cs" id="7_afg5n"]
 
-[node name="Node2D" type="Node2D" unique_id=1074453659]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6abhf"]
+size = Vector2(114, 116)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tbev"]
+size = Vector2(100, 106)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4urob"]
+size = Vector2(103.5, 105.5)
+
+[node name="Main" type="Node2D" unique_id=1074453659]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1398119759]
 stream = ExtResource("4_cikdb")
@@ -19,9 +30,41 @@ script = ExtResource("1_pgq6d")
 position = Vector2(616, 300)
 texture = ExtResource("2_jxl4m")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1545747202]
+position = Vector2(616, 298)
+shape = SubResource("RectangleShape2D_6abhf")
+
 [node name="BeatIndicator" type="ColorRect" parent="." unique_id=1350076071]
 offset_left = 594.0
 offset_top = 489.0
 offset_right = 638.0
 offset_bottom = 532.0
 script = ExtResource("3_jxl4m")
+
+[node name="Slime Blue" type="CharacterBody2D" parent="." unique_id=1555318803]
+script = ExtResource("6_n87l3")
+
+[node name="ColorRect" type="ColorRect" parent="Slime Blue" unique_id=1387774933]
+offset_left = 218.0
+offset_top = 252.0
+offset_right = 323.0
+offset_bottom = 357.0
+color = Color(0.043137256, 0.23529412, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slime Blue" unique_id=2140888856]
+position = Vector2(270, 306)
+shape = SubResource("RectangleShape2D_4tbev")
+
+[node name="Yellow Slime" type="CharacterBody2D" parent="." unique_id=1685838259]
+script = ExtResource("7_afg5n")
+
+[node name="ColorRect" type="ColorRect" parent="Yellow Slime" unique_id=1772161461]
+offset_left = 870.0
+offset_top = 244.0
+offset_right = 975.0
+offset_bottom = 349.0
+color = Color(1, 1, 0.05490196, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Yellow Slime" unique_id=1566985114]
+position = Vector2(924.25, 295.25)
+shape = SubResource("RectangleShape2D_4urob")
